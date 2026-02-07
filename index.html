@@ -1,0 +1,283 @@
+<!-- Q3JlYXRlZCBieSBBdmlzaGthciBEZXNobXVraApBdmlzaGthciBTdHVkaW8KaHR0cHM6Ly9kYXZpc2hrYXIuZ2l0aHViLmlvL0F2aXNoa2FyU3R1ZGlvLw== -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEP 2020 Portal | Future of Education</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: '#4f46e5',
+            secondary: '#6366f1',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #4f46e5, #9333ea);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased text-gray-800 bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="fixed w-full z-50 transition-all duration-300 glass shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <div class="flex-shrink-0 flex items-center gap-2">
+          <span class="text-2xl font-bold text-indigo-600 tracking-tight">NEP<span
+              class="text-gray-900">2020</span></span>
+        </div>
+        <div class="hidden md:flex space-x-8">
+          <a href="#home" class="text-gray-600 hover:text-indigo-600 font-medium transition">Home</a>
+          <a href="#about" class="text-gray-600 hover:text-indigo-600 font-medium transition">About</a>
+          <a href="#portal" class="text-gray-600 hover:text-indigo-600 font-medium transition">Portals</a>
+          <a href="#notices" class="text-gray-600 hover:text-indigo-600 font-medium transition">Notices</a>
+          <a href="#contact" class="text-gray-600 hover:text-indigo-600 font-medium transition">Contact</a>
+        </div>
+        <div class="hidden md:flex">
+          <a href="courses_demo.html"
+            class="px-5 py-2.5 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30">Explore
+            Courses</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-indigo-100 rounded-full blur-3xl opacity-50 mix-blend-multiply">
+      </div>
+      <div
+        class="absolute bottom-0 right-0 w-[800px] h-[800px] bg-purple-100 rounded-full blur-3xl opacity-50 mix-blend-multiply">
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+        Empowering <span class="gradient-text">Education</span><br> Through NEP 2020 & AI
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
+        Experience the new era of learning — inclusive, flexible, and innovative. A unified platform for students,
+        faculty, and administrators.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#portal"
+          class="px-8 py-4 rounded-full bg-indigo-600 text-white font-bold text-lg hover:bg-indigo-700 transition shadow-xl shadow-indigo-500/30">Get
+          Started</a>
+        <a href="#about"
+          class="px-8 py-4 rounded-full bg-white text-gray-700 border border-gray-200 font-bold text-lg hover:bg-gray-50 transition">Learn
+          More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portals Section -->
+  <section id="portal" class="py-24 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Choose Your Portal</h2>
+        <p class="text-lg text-gray-600">Secure access for every role in the ecosystem</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Student -->
+        <div
+          class="group relative bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 hover:-translate-y-2">
+          <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-3xl">👨‍🎓</div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-3">Student Portal</h3>
+          <p class="text-gray-600 mb-8">Access demo subjects, check results, manage profile, and view notices.</p>
+          <div class="flex gap-3">
+            <a href="student/student_login.php"
+              class="flex-1 py-3 text-center rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition">Login</a>
+            <a href="student/student_signup.php"
+              class="flex-1 py-3 text-center rounded-xl bg-gray-50 text-indigo-600 font-semibold hover:bg-indigo-50 transition">Signup</a>
+          </div>
+        </div>
+
+        <!-- Faculty -->
+        <div
+          class="group relative bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 hover:-translate-y-2">
+          <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 text-3xl">👨‍🏫</div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-3">Faculty Portal</h3>
+          <p class="text-gray-600 mb-8">Manage courses, mark attendance, upload results, and track students.</p>
+          <div class="flex gap-3">
+            <a href="faculty/faculty_login.php"
+              class="w-full py-3 text-center rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition">Login
+              Dashboard</a>
+          </div>
+        </div>
+
+        <!-- Admin -->
+        <div
+          class="group relative bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-300 hover:-translate-y-2">
+          <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 text-3xl">⚡</div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-3">Admin Panel</h3>
+          <p class="text-gray-600 mb-8">System configuration, user management, and overall analytics.</p>
+          <div class="flex gap-3">
+            <a href="admin/admin_login.php"
+              class="w-full py-3 text-center rounded-xl bg-gray-900 text-white font-semibold hover:bg-black transition">Secure
+              Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notices Section -->
+  <section id="notices" class="py-24 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center mb-12">Latest Announcements</h2>
+      <div class="space-y-4">
+        <div
+          class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-indigo-500 flex items-start gap-4 hover:shadow-md transition">
+          <span class="text-2xl">📢</span>
+          <div>
+            <h4 class="font-bold text-gray-900">Semester exams begin</h4>
+            <p class="text-gray-600 mt-1">Starting from <strong>1st November 2025</strong>. Check timetable for details.
+            </p>
+          </div>
+        </div>
+        <div
+          class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-green-500 flex items-start gap-4 hover:shadow-md transition">
+          <span class="text-2xl">🎓</span>
+          <div>
+            <h4 class="font-bold text-gray-900">New Course Added</h4>
+            <p class="text-gray-600 mt-1">Introduction to <strong>AI & Data Science</strong> is now available for
+              registration.</p>
+          </div>
+        </div>
+        <div
+          class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-purple-500 flex items-start gap-4 hover:shadow-md transition">
+          <span class="text-2xl">🤖</span>
+          <div>
+            <h4 class="font-bold text-gray-900">AI Assistant Available</h4>
+            <p class="text-gray-600 mt-1">Have questions? <a href="ai/index.html" class="text-indigo-600 underline">Chat
+                with our AI</a> to get instant answers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-24 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row items-center gap-16">
+        <div class="lg:w-1/2 relative">
+          <div class="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl opacity-20 blur-2xl">
+          </div>
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            alt="Students" class="relative rounded-3xl shadow-2xl w-full">
+        </div>
+        <div class="lg:w-1/2">
+          <h2 class="text-4xl font-bold mb-6">Built for the <span class="text-indigo-600">Future of India</span></h2>
+          <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+            The National Education Policy (NEP) 2020 aims to make the Indian education system more holistic, flexible,
+            and multidisciplinary.
+          </p>
+          <ul class="space-y-4">
+            <li class="flex items-center gap-3 text-gray-700 font-medium">
+              <span class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">✓</span>
+              Flexible Curriculum
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 font-medium">
+              <span class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">✓</span>
+              Skill Development Focus
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 font-medium">
+              <span class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">✓</span>
+              Technology Integration
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-24 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12">
+        <h2 class="text-3xl font-bold text-center mb-8">Get in Touch</h2>
+        <form action="feedback_submit.php" method="POST" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+              <input type="text" name="name"
+                class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+                placeholder="John Doe" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+              <input type="email" name="email"
+                class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+                placeholder="john@example.com" required>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+            <textarea name="message" rows="4"
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              placeholder="How can we help you?" required></textarea>
+          </div>
+          <button type="submit"
+            class="w-full py-4 rounded-xl bg-indigo-600 text-white font-bold text-lg hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30">Send
+            Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h3 class="text-2xl font-bold text-white mb-4">NEP 2020 Portal</h3>
+      <p class="mb-8">Empowering the next generation of learners.</p>
+      <div class="flex justify-center gap-6 mb-8">
+        <a href="#" class="hover:text-white transition">Privacy Policy</a>
+        <a href="#" class="hover:text-white transition">Terms of Service</a>
+        <a href="#" class="hover:text-white transition">Contact</a>
+      </div>
+      <p class="text-sm">© 2026 NEP Portal. Designed with <span class="text-red-500">♥</span> by Varadraj & D. Avishkar.
+      </p>
+    </div>
+  </footer>
+
+  <!-- AI Chat Button -->
+  <a href="ai/index.html"
+    class="fixed bottom-6 right-6 bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-all duration-300 hover:scale-110 z-50 flex items-center justify-center group">
+    <span class="text-2xl">🤖</span>
+    <span
+      class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out pl-0 group-hover:pl-3 font-medium">Chat
+      with AI</span>
+  </a>
+
+</body>
+
+</html>

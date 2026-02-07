@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Chatbot</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #4285f4 0%, #34a853 25%, #fbbc04 50%, #ea4335 100%);
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --danger-color: #ea4335;
+            --text-dark: #202124;
+            --text-muted: #5f6368;
+            --border-color: #dadce0;
+            --bg-light: #f8f9fa;
+            --message-user-bg: #4285f4;
+            --message-bot-bg: #f1f3f4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .chat-wrapper {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 1000px;
+            height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+
+        .chat-header {
+            background: white;
+            border-bottom: 2px solid var(--border-color);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            flex: 1;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        }
+
+        .brand-info h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-info .status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.813rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-header {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-header:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            background: #fafafa;
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #dadce0;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #bdc1c6;
+        }
+
+        .message-wrapper {
+            display: flex;
+            gap: 0.875rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-wrapper.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .message-wrapper.bot .message-avatar {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .message-wrapper.user .message-avatar {
+            background: #5f6368;
+            color: white;
+        }
+
+        .message-content {
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.813rem;
+            color: var(--text-muted);
+            padding: 0 0.25rem;
+        }
+
+        .message-wrapper.user .message-header {
+            flex-direction: row-reverse;
+        }
+
+        .message-bubble {
+            padding: 0.875rem 1.125rem;
+            border-radius: 16px;
+            font-size: 0.938rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            white-space: pre-wrap;
+        }
+
+        .message-wrapper.user .message-bubble {
+            background: var(--message-user-bg);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-wrapper.bot .message-bubble {
+            background: white;
+            color: var(--text-dark);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .message-wrapper.error .message-bubble {
+            background: #fce8e6;
+            color: var(--danger-color);
+            border: 1px solid #f28b82;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 0 1.5rem 0.5rem;
+            background: #fafafa;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-indicator .message-avatar {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .typing-content {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            padding: 0.75rem 1rem;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.375rem;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0.7);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .typing-text {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .chat-input-area {
+            padding: 1.25rem 1.5rem;
+            background: white;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.75rem;
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 24px;
+            padding: 0.5rem 0.75rem 0.5rem 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            background: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.1);
+        }
+
+        .input-actions-left {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .btn-input-action {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-input-action:hover {
+            background: rgba(66, 133, 244, 0.1);
+            color: var(--primary-color);
+        }
+
+        #userInput {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 0.938rem;
+            color: var(--text-dark);
+            padding: 0.5rem 0;
+            outline: none;
+            resize: none;
+            max-height: 120px;
+            font-family: inherit;
+        }
+
+        #userInput::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn-send {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        }
+
+        .btn-send:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(66, 133, 244, 0.4);
+        }
+
+        .btn-send:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .btn-send:disabled {
+            background: #dadce0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .welcome-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .welcome-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-screen h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .welcome-screen p {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            max-width: 600px;
+        }
+
+        .chip {
+            padding: 0.625rem 1.25rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chip:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                max-width: 100%;
+                border-radius: 0;
+            }
+
+            .chat-header {
+                padding: 1rem;
+            }
+
+            .brand-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 1.25rem;
+            }
+
+            .brand-info h1 {
+                font-size: 1.125rem;
+            }
+
+            .header-actions .btn-header:not(:first-child) {
+                display: none;
+            }
+
+            .chat-messages {
+                padding: 1.5rem 1rem;
+            }
+
+            .message-content {
+                max-width: 80%;
+            }
+
+            .chat-input-area {
+                padding: 1rem;
+            }
+
+            .input-actions-left .btn-input-action:not(:first-child) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-header {
+                padding: 0.875rem;
+            }
+
+            .brand-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 1.125rem;
+            }
+
+            .brand-info h1 {
+                font-size: 1rem;
+            }
+
+            .brand-info .status {
+                font-size: 0.75rem;
+            }
+
+            .chat-messages {
+                padding: 1rem 0.75rem;
+            }
+
+            .message-wrapper {
+                gap: 0.625rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .message-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .message-bubble {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .chat-input-area {
+                padding: 0.875rem;
+            }
+
+            .input-wrapper {
+                padding: 0.375rem 0.5rem 0.375rem 1rem;
+            }
+
+            #userInput {
+                font-size: 0.875rem;
+            }
+
+            .btn-send {
+                width: 40px;
+                height: 40px;
+                font-size: 1.125rem;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .chat-wrapper {
+                padding: 2rem;
+            }
+
+            .chat-container {
+                height: calc(100vh - 4rem);
+                border-radius: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="header-brand">
+                    <div class="brand-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+                    <div class="brand-info">
+                        <h1>Gemini AI</h1>
+                        <div class="status">
+                            <span class="status-dot"></span>
+                            <span>Online</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-header" title="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <button class="btn-header" title="Settings">
+                        <i class="bi bi-gear"></i>
+                    </button>
+                    <button class="btn-header" title="More">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-screen">
+                    <div class="welcome-icon">
+                        <i class="bi bi-stars"></i>
+                    </div>
+                    <h2>Hello! How can I help you today?</h2>
+                    <p>I'm powered by Google Gemini AI. Ask me anything!</p>
+                    <div class="suggestion-chips">
+                        <div class="chip" onclick="sendSuggestion('Explain quantum computing')">
+                            <i class="bi bi-cpu"></i> Explain quantum computing
+                        </div>
+                        <div class="chip" onclick="sendSuggestion('Write a poem about AI')">
+                            <i class="bi bi-pen"></i> Write a poem
+                        </div>
+                        <div class="chip" onclick="sendSuggestion('Help me code in Python')">
+                            <i class="bi bi-code-slash"></i> Help with coding
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="message-avatar">
+                    <i class="bi bi-stars"></i>
+                </div>
+                <div class="typing-content">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="typing-text">Gemini is thinking...</span>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <div class="input-actions-left">
+                        <button class="btn-input-action" title="Add attachment">
+                            <i class="bi bi-paperclip"></i>
+                        </button>
+                        <button class="btn-input-action" title="Add image">
+                            <i class="bi bi-image"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="userInput" placeholder="Message Gemini..." autocomplete="off">
+                    <div class="btn-send" id="sendBtn" title="Send message">
+                        <i class="bi bi-send-fill"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Locked Modal -->
+            <div class="modal fade" id="featureLockedModal" tabindex="-1" aria-labelledby="featureLockedModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="featureLockedModalLabel">
+                                <i class="bi bi-lock-fill text-muted me-2"></i>
+                                Feature Locked
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>This feature is currently locked by Google. The Gemini API does not yet support image or file attachments in this version.</p>
+                            <p class="text-muted mb-0">Please check back later for updates as new features become available.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+       const API_KEY = 'AIzaSyAW7EZIRv1xKFOEFBUTLXfseErvaTvVTQY';
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        let conversationHistory = [];
+
+        function removeWelcomeScreen() {
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            if (welcomeScreen) {
+                welcomeScreen.remove();
+            }
+        }
+
+        function addMessage(text, isUser = false, isError = false) {
+            removeWelcomeScreen();
+            
+            const messageWrapper = document.createElement('div');
+            messageWrapper.className = `message-wrapper ${isUser ? 'user' : isError ? 'error' : 'bot'}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.innerHTML = isUser ? '<i class="bi bi-person-fill"></i>' : '<i class="bi bi-stars"></i>';
+
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+
+            const messageHeader = document.createElement('div');
+            messageHeader.className = 'message-header';
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            messageHeader.innerHTML = `<span>${isUser ? 'You' : 'Gemini'}</span> <span>${timeStr}</span>`;
+
+            const messageBubble = document.createElement('div');
+            messageBubble.className = 'message-bubble';
+            messageBubble.textContent = text;
+
+            messageContent.appendChild(messageHeader);
+            messageContent.appendChild(messageBubble);
+            messageWrapper.appendChild(avatar);
+            messageWrapper.appendChild(messageContent);
+            chatMessages.appendChild(messageWrapper);
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function sendMessage(message = null) {
+            const text = message || userInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, true);
+            if (!message) userInput.value = '';
+            sendBtn.disabled = true;
+            typingIndicator.classList.add('active');
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: text
+                            }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    const errorMsg = data.error?.message || data.error || 'Unknown error occurred';
+                    addMessage(`Error: ${errorMsg}`, false, true);
+                    console.error('API Error:', data);
+                } else if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+                    const botResponse = data.candidates[0].content.parts[0].text;
+                    addMessage(botResponse);
+                } else {
+                    addMessage('No response received from Gemini', false, true);
+                    console.error('Unexpected response structure:', data);
+                }
+            } catch (error) {
+                addMessage(`Connection error: ${error.message}`, false, true);
+                console.error('Fetch error:', error);
+            } finally {
+                typingIndicator.classList.remove('active');
+                sendBtn.disabled = false;
+                userInput.focus();
+            }
+        }
+
+        function sendSuggestion(text) {
+            sendMessage(text);
+        }
+
+        sendBtn.addEventListener('click', () => sendMessage());
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        userInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Function to show the feature locked modal
+        function showFeatureLockedMessage() {
+            const modal = new bootstrap.Modal(document.getElementById('featureLockedModal'));
+            modal.show();
+        }
+
+        // Add click handlers for attachment and image buttons
+        document.querySelector('.btn-input-action[title="Add attachment"]').addEventListener('click', showFeatureLockedMessage);
+        document.querySelector('.btn-input-action[title="Add image"]').addEventListener('click', showFeatureLockedMessage);
+
+        window.addEventListener('load', () => {
+            userInput.focus();
+        });
+    </script>
+</body>
+</html>
