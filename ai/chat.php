@@ -15,7 +15,8 @@ if (empty($userMessage)) {
 // ======================
 // Gemini API Configuration
 // ======================
-$api_key = "AIzaSyAW7EZIRv1xKFOEFBUTLXfseErvaTvVTQY"; // 🔑 Your API key
+$api_key = "YOUR_API_KEY_HERE";
+// 🔑 Your API key
 
 // Use correct model name (gemini-2.5-pro doesn't exist)
 $model = "gemini-1.5-flash"; // or "gemini-1.5-pro" or "gemini-2.0-flash-exp"
