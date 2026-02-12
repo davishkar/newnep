@@ -9,9 +9,13 @@ if (isset($_POST['signup'])) {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
+    $year = $_POST['year'] ?? '';
     
     // Server-side validation
-    if (empty($name) || !preg_match("/^[a-zA-Z\s]+$/", $name)) {
+    if (empty($year) || !in_array($year, ['FY', 'SY', 'TY'])) {
+        $error = "Please select a valid year";
+    }
+    else if (empty($name) || !preg_match("/^[a-zA-Z\s]+$/", $name)) {
         $error = "Name should contain only letters and spaces";
     } 
     else if (strlen($name) < 3 || strlen($name) > 50) {
@@ -46,8 +50,8 @@ if (isset($_POST['signup'])) {
             // Hash password and insert
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             
-            $stmt = mysqli_prepare($conn, "INSERT INTO students (name, email, password) VALUES (?, ?, ?)");
-            mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashedPassword);
+            $stmt = mysqli_prepare($conn, "INSERT INTO students (name, email, password, year) VALUES (?, ?, ?, ?)");
+            mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $hashedPassword, $year);
             
             if (mysqli_stmt_execute($stmt)) {
                 $success = "Account created successfully! Redirecting to login...";
@@ -129,6 +133,17 @@ if (isset($_POST['signup'])) {
                 <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                 <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-gray-50 focus:bg-white" placeholder="student@example.com" required>
                 <span class="text-red-500 text-xs mt-1 block" id="emailError"></span>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Year</label>
+                <select name="year" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+                    <option value="">Select Year</option>
+                    <option value="FY">First Year (FY)</option>
+                    <option value="SY">Second Year (SY)</option>
+                    <option value="TY">Third Year (TY)</option>
+                </select>
+                <span class="text-red-500 text-xs mt-1 block" id="yearError"></span>
             </div>
 
             <div>

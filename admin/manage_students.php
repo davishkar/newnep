@@ -165,6 +165,11 @@ function renderTable($result){
                     </a>
                 </li>
                 <li>
+                    <a href="subject_change_approvals.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
+                        <i class="bi bi-check2-square"></i> Subject Requests
+                    </a>
+                </li>
+                <li>
                     <a href="manage_marks_credits.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
                         <i class="bi bi-award"></i> Marks & Credits
                     </a>

@@ -7,52 +7,106 @@ A comprehensive academic management system designed to streamline interactions b
 ### for Students
 - **Dashboard:** View academic progress and quick stats.
 - **Attendance:** Check daily attendance records and status.
-- **Results:** Access semester-wise marks and credits.
-- **My Subjects:** View enrolled subjects and details.
-- **Profile:** Manage personal information and change passwords.
-- **Responsive UI:** Optimized for mobile and desktop viewing.
+# NEP Portal - Student Management System
 
-### for Faculty
-- **Dashboard:** Overview of assigned classes and students.
-- **Student Management:** View student lists, add/edit student details (including passwords and subjects).
-- **Academic Tasks:** Mark daily attendance and enter semester marks.
-- **Notices:** Post announcements for students.
+A comprehensive web-based student management system built with PHP and MySQL, designed to manage students, teachers, subjects, marks, and attendance following the National Education Policy (NEP) framework.
 
-### for Admin
-- **Central Dashboard:** System-wide statistics and management.
-- **User Management:** Full control to add, edit, delete Students and Teachers.
-- **Academic Management:** Manage Subjects, Marks, and Credits.
-- **Reports:** Generate system reports.
-- **Announcements:** Post college-wide notices.
+## Features
 
-## 🛠️ Technology Stack
-- **Backend:** PHP (Native)
-- **Database:** MySQL
-- **Frontend:** HTML5, Tailwind CSS (via CDN), JavaScript
-- **Icons:** Bootstrap Icons
-- **Fonts:** Inter (Google Fonts)
+### Student Portal
+- **Student registration and login** with year selection (FY/SY/TY)
+- View personal dashboard with academic overview
+- View enrolled subjects
+- **Subject Change Request** - Submit requests to change enrolled subjects with optional proof upload
+- View request history and status (Pending/Approved/Rejected)
+- View marks and attendance
+- Profile management
+- Password change functionality
 
-## 📦 Installation & Setup
+### Admin Panel
+- Manage students (add, edit, delete, view)
+- Manage teachers
+- Manage subjects
+- **Subject Change Approvals** - Review and approve/reject student subject change requests
+- Manage marks and credits
+- View reports and analytics
+- Announcements management
+- View student feedback
 
-1.  **Clone/Download:** 
+### Faculty Panel
+- Mark attendance
+- View attendance reports
+- Enter semester marks
+- View student marks
+- **Subject Change Approvals** - Review and approve/reject student subject change requests
+- Manage announcements
+- Student management
+
+## Recent Updates (February 2026)
+
+### ✨ New Features
+1. **Year Selection in Student Signup**
+   - Students now select their academic year (FY/SY/TY) during registration
+   - Fixes visibility issue where new students weren't appearing in admin/faculty panels
+
+2. **Subject Change Request System**
+   - Students can request to change their enrolled subjects
+   - Optional file upload for supporting documents (JPG, PNG, PDF)
+   - Both admin and teachers can approve/reject requests
+   - Automatic enrollment update upon approval
+   - Complete request history tracking with status badges
+
+## Technologies Used
+
+- **Backend**: PHP 7.4+
+- **Database**: MySQL/MariaDB
+- **Frontend**: HTML5, CSS3, JavaScript
+- **CSS Framework**: Tailwind CSS (CDN)
+- **Icons**: Bootstrap Icons
+- **Charts**: Chart.js
+- **Server**: Apache (XAMPP)
+
+## Installation
+
+1. **Prerequisites**
+   - XAMPP (or any Apache + MySQL + PHP stack)
+   - PHP 7.4 or higher
+   - MySQL 5.7 or higher
+
+2. **Setup Steps**
     - Place the project folder `newnep` inside your web server directory (e.g., `C:\xampp\htdocs\`).
 
-2.  **Database Setup:**
-    - Open phpMyAdmin (http://localhost/phpmyadmin).
-    - Create a new database named `nep_portal`.
-    - Import the provided SQL file: `nep_portal.sql` located in the project root.
+   - Import the base database: `nep_portal.sql`
+   - Run migrations for new features:
+     ```bash
+     # Option 1: Use the batch file
+     c:\xampp\htdocs\newnep\migrations\run_migration.bat
+     
+     # Option 2: Manual import via phpMyAdmin
+     # Import: migrations/add_subject_change_requests.sql
+     ```
 
-3.  **Configuration:**
-    - Check `db.php` in the root directory to ensure database credentials match your local setup:
-      ```php
-      $servername = "localhost";
-      $username = "root";
-      $password = "";
-      $dbname = "nep_portal";
-      ```
+3. **Configuration**
+   - Verify database credentials in `db.php`:
+     ```php
+     $servername = "localhost";
+     $username = "root";
+     $password = "";
+     $dbname = "nep_portal";
+     ```
 
-4.  **Run:**
-    - Open your browser and navigate to: `http://localhost/newnep/`
+4. **File Permissions**
+   - Ensure the `uploads/` directory is writable:
+     ```bash
+     mkdir uploads/subject_change_proofs
+     chmod 755 uploads/subject_change_proofs
+     ```
+
+5. **Access the Application**
+   - Homepage: `http://localhost/newnep/`
+   - Admin Panel: `http://localhost/newnep/admin/admin_login.php`
+   - Faculty Panel: `http://localhost/newnep/faculty/faculty_login.php`
+   - Student Portal: `http://localhost/newnep/student/student_login.php`
 
 ## 🔑 Default Login Credentials (Demo Data)
 
@@ -76,46 +130,45 @@ A comprehensive academic management system designed to streamline interactions b
 
 ```bash
 newnep/
-├── admin/                  # Administrator Portal
-│   ├── admin_dashboard.php # Main admin overview
-│   ├── admin_login.php     # Admin authentication
-│   ├── manage_students.php # CRUD operations for students
-│   ├── edit_student.php    # Enhanced student editor (Passwords/Subjects)
-│   ├── manage_teachers.php # CRUD operations for faculty
-│   ├── manage_subjects.php # Curriculum management
+├── admin/                       # Administrator Portal
+│   ├── admin_dashboard.php      # Main admin overview
+│   ├── admin_login.php          # Admin authentication
+│   ├── manage_students.php      # CRUD operations for students
+│   ├── subject_change_approvals.php # NEW: Review subject change requests
+│   ├── manage_teachers.php      # CRUD operations for faculty
+│   ├── manage_subjects.php      # Curriculum management
 │   ├── manage_marks_credits.php # Academic results oversight
-│   ├── reports.php         # Analytics, Charts, Export & Print
-│   ├── announcements.php   # System-wide notice board
-│   ├── view_feedback.php   # User feedback viewer
-│   ├── export_data.php     # Data export script (CSV)
-│   ├── profile.php         # Admin profile settings
-│   └── change_password.php # Security settings
+│   ├── reports.php              # Analytics, Charts, Export & Print
+│   └── announcements.php        # System-wide notice board
 │
-├── faculty/                # Faculty Portal
-│   ├── faculty_login.php   # Faculty authentication
-│   ├── teacher_dashboard.php # Main faculty overview
-│   ├── edit_student.php    # Student management for teachers
-│   ├── mark_attendance.php # Daily attendance marking
-│   ├── add_marks.php       # Semester marks entry
-│   └── notices.php         # Student announcements
+├── faculty/                     # Faculty Portal
+│   ├── faculty_login.php        # Faculty authentication
+│   ├── teacher_dashboard.php    # Main faculty overview
+│   ├── subject_change_approvals.php # NEW: Review subject change requests
+│   ├── mark_attendance.php      # Daily attendance marking
+│   ├── semester_mark_entry.php  # Semester marks entry
+│   └── view_marks.php           # View student marks
 │
-├── student/                # Student Portal
-│   ├── student_login.php   # Student authentication
-│   ├── student_dashboard.php # Main student overview
-│   ├── my_subjects.php     # Enrolled subjects list
-│   ├── view_marks.php      # Academic results viewer
-│   ├── profile.php         # Personal profile management
-│   └── change_password.php # Security settings
+├── student/                     # Student Portal
+│   ├── student_login.php        # Student authentication
+│   ├── student_signup.php       # UPDATED: Now includes year selection
+│   ├── student_dashboard.php    # Main student overview
+│   ├── subject_change_request.php # NEW: Submit subject change requests
+│   ├── my_subjects.php          # Enrolled subjects list
+│   ├── view_marks.php           # Academic results viewer
+│   └── profile.php              # Personal profile management
 │
-├── db.php                  # Database connection configuration
-├── nep_portal.sql          # Database import file (Structure + Demo Data)
-├── index.html              # Landing page (Home, About, Contact)
-├── feedback_submit.php     # Feedback form processor
-├── ai/                     # AI Assistant Module
-│   ├── index.html          # Chat Interface
-│   ├── chat.php            # Chat backend logic
-│   └── api.php             # API handling
-└── README.md               # Project documentation
+├── migrations/                  # Database Migrations
+│   ├── add_subject_change_requests.sql # NEW: Subject change requests table
+│   └── run_migration.bat        # NEW: Migration runner script
+│
+├── uploads/                     # File Uploads
+│   └── subject_change_proofs/   # NEW: Subject change request proof files
+│
+├── db.php                       # Database connection configuration
+├── nep_portal.sql               # Base database schema
+├── index.html                   # Landing page
+└── README.md                    # Project documentation
 ```
 
 ## ✨ Recent Updates

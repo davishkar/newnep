@@ -122,6 +122,11 @@ if (empty($semesterData)) {
                     </a>
                 </li>
                 <li>
+                    <a href="subject_change_request.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
+                        <i class="bi bi-arrow-left-right"></i> Subject Change
+                    </a>
+                </li>
+                <li>
                     <a href="view_marks.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
                         <i class="bi bi-clipboard-data"></i> View Marks
                     </a>
