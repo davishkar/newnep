@@ -167,11 +167,12 @@ if (!is_array($current_subjects)) $current_subjects = [];
                     </a>
                 </div>
 
+                <form method="POST" id="editForm">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     
                     <!-- Left Column: Basic Info -->
                     <div class="lg:col-span-2 space-y-6">
-                        <form method="POST" id="editForm" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                             <div class="p-6 border-b border-gray-100 bg-gray-50">
                                 <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
                                     <i class="bi bi-person-lines-fill text-green-500"></i> Basic Information
@@ -224,7 +225,7 @@ if (!is_array($current_subjects)) $current_subjects = [];
                                     </div>
                                 </div>
                             </div>
-                        
+                        </div>
                     </div>
 
                     <!-- Right Column: Subjects -->
@@ -262,15 +263,15 @@ if (!is_array($current_subjects)) $current_subjects = [];
                             </div>
                             
                              <div class="p-6 border-t border-gray-100 bg-gray-50">
-                                <button type="submit" form="editForm" class="w-full py-2.5 rounded-xl bg-green-600 text-white font-bold hover:bg-green-700 transition shadow-lg shadow-green-500/20">
+                                <button type="submit" class="w-full py-2.5 rounded-xl bg-green-600 text-white font-bold hover:bg-green-700 transition shadow-lg shadow-green-500/20">
                                     Save All Changes
                                 </button>
                             </div>
                         </div>
-                        </form>
                     </div>
 
                 </div>
+                </form>
             </div>
             
         </main>
