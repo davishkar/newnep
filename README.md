@@ -212,5 +212,5 @@ This project is open source and available for educational purposes.
 
 ```markdown
 **Last updated:** 21 February 2026  
-*Developed by Avishkar D. & Varadraj N. for the NEP Portal project.*
+*Developed by Avishkar D. & Varadraj N. for the NEP Portal project❤️.*
 ```
