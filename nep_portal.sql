@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2026 at 06:00 PM
+-- Generation Time: Feb 12, 2026 at 07:52 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,7 +27,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `admins`
 --
 
-DROP TABLE IF EXISTS `admins`;
 CREATE TABLE `admins` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
@@ -40,7 +39,85 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`) VALUES
-(1, 'Main Admin', 'admin@gmail.com', 'admin123');
+(1, 'Main Admin', 'admin@gmail.com', '$2y$10$Q1hw.nmEaDgbS7XYlw9I5O3f6uPDLjoWWTtTCcjvea2pVvbT3DxQq');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance`
+--
+
+CREATE TABLE `attendance` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `subject` varchar(150) NOT NULL,
+  `date` date NOT NULL,
+  `status` enum('Present','Absent','Late') NOT NULL,
+  `marked_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`id`, `student_id`, `subject`, `date`, `status`, `marked_by`, `created_at`) VALUES
+(1, 1, 'Mathematics', '2026-02-01', 'Present', 1, '2026-02-01 10:00:00'),
+(2, 1, 'Mathematics', '2026-02-02', 'Present', 1, '2026-02-02 10:00:00'),
+(3, 1, 'Mathematics', '2026-02-03', 'Absent', 1, '2026-02-03 10:00:00'),
+(4, 1, 'Mathematics', '2026-02-04', 'Present', 1, '2026-02-04 10:00:00'),
+(5, 2, 'Computer Science', '2026-02-01', 'Present', 1, '2026-02-01 10:00:00'),
+(6, 2, 'Computer Science', '2026-02-02', 'Late', 1, '2026-02-02 10:00:00'),
+(7, 3, 'Data Science', '2026-02-01', 'Present', 1, '2026-02-01 10:00:00'),
+(8, 3, 'Data Science', '2026-02-02', 'Present', 1, '2026-02-02 10:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `message` text NOT NULL,
+  `submitted_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `name`, `email`, `message`, `submitted_at`) VALUES
+(1, 'Rahul Verma', 'rahul@test.com', 'Great portal! Very easy to use and navigate.', '2026-02-02 12:00:00'),
+(2, 'Priya Singh', 'priya@test.com', 'Can you please add a dark mode option? It would be really helpful.', '2026-02-05 16:20:00'),
+(3, 'Avishkar', 'supervisor@example.com', 'this is a demo', '2026-02-07 12:38:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notices`
+--
+
+CREATE TABLE `notices` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `target_year` enum('All','FY','SY','TY') NOT NULL,
+  `posted_by` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notices`
+--
+
+INSERT INTO `notices` (`id`, `title`, `message`, `target_year`, `posted_by`, `created_at`) VALUES
+(1, 'Welcome to New Semester', 'Classes for the new academic year will commence from June 15th. Please check your timetables for details.', 'All', 'Main Admin', '2026-02-01 10:00:00'),
+(2, 'Assignment Submission Deadline', 'Last date to submit Assignment 1 for DSA is extended to next Friday.', 'TY', 'Komal', '2026-02-05 14:30:00'),
+(3, 'Guest Lecture on AI', 'A guest lecture on \"Future of AI\" is organized on Saturday at 10 AM in the Auditorium. All students are requested to attend.', 'All', 'amar mane', '2026-02-06 09:15:00'),
+(4, 'Holiday Notice', 'College will remain closed on Monday due to public holiday.', 'All', 'Main Admin', '2026-02-07 08:00:00');
 
 -- --------------------------------------------------------
 
@@ -48,7 +125,6 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`) VALUES
 -- Table structure for table `students`
 --
 
-DROP TABLE IF EXISTS `students`;
 CREATE TABLE `students` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -63,7 +139,7 @@ CREATE TABLE `students` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `students` pass:- Student@123 for all
+-- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`id`, `name`, `email`, `password`, `created_at`, `mobile`, `abc_id`, `year`, `subjects`, `profile_completed`) VALUES
@@ -76,7 +152,8 @@ INSERT INTO `students` (`id`, `name`, `email`, `password`, `created_at`, `mobile
 (7, 'Reya Verma', 'reya@example.com', '$2y$10$EfCHBNEjmg9x0oS9sxvKjuLd64fpPuzAq6aoHC5N7snAMTIvPUD/y', '2026-02-07 10:30:00', '9876543216', 'ABC123462', 'FY', '{\"Course 1\":\"Mathematics\",\"Course 2\":\"Physics\",\"OE\":\"Yoga & Wellness\",\"KS\":\"Indian Constitution\"}', 1),
 (8, 'Kiara Shah', 'kiara@example.com', '$2y$10$EfCHBNEjmg9x0oS9sxvKjuLd64fpPuzAq6aoHC5N7snAMTIvPUD/y', '2026-02-07 10:35:00', '9876543217', 'ABC123463', 'SY', '{\"Major\":\"Computer Science\",\"Minor\":\"Electronics\",\"OE\":\"AI Basics\"}', 1),
 (9, 'Myra Reddy', 'myra@example.com', '$2y$10$EfCHBNEjmg9x0oS9sxvKjuLd64fpPuzAq6aoHC5N7snAMTIvPUD/y', '2026-02-07 10:40:00', '9876543218', 'ABC123464', 'TY', '{\"Major 1\":\"Data Science\",\"Major 2\":\"Machine Learning\",\"OJT\":\"Internship\"}', 1),
-(10, 'Ananya Das', 'ananya@example.com', '$2y$10$EfCHBNEjmg9x0oS9sxvKjuLd64fpPuzAq6aoHC5N7snAMTIvPUD/y', '2026-02-07 10:45:00', '9876543219', 'ABC123465', 'FY', '{\"Course 1\":\"Mathematics\",\"Course 2\":\"Physics\",\"OE\":\"Yoga & Wellness\",\"KS\":\"Indian Constitution\"}', 1);
+(10, 'Ananya Das', 'ananya@example.com', '$2y$10$EfCHBNEjmg9x0oS9sxvKjuLd64fpPuzAq6aoHC5N7snAMTIvPUD/y', '2026-02-07 10:45:00', '9876543219', 'ABC123465', 'FY', '{\"Course 1\":\"Mathematics\",\"Course 2\":\"Physics\",\"OE\":\"Yoga & Wellness\",\"KS\":\"Indian Constitution\"}', 1),
+(11, 'Avishkar', 'dev.avishkar@gmail.com', '$2y$10$A7QvAMNTj.cMmszwbe3BEepUlx72D//HnboXgZdowRJHDUPx1LrhC', '2026-02-12 18:34:19', '9146964882', 'abcid123456789', 'TY', '{\"Major\":\"Computer Application\"}', 0);
 
 -- --------------------------------------------------------
 
@@ -84,7 +161,6 @@ INSERT INTO `students` (`id`, `name`, `email`, `password`, `created_at`, `mobile
 -- Table structure for table `student_details`
 --
 
-DROP TABLE IF EXISTS `student_details`;
 CREATE TABLE `student_details` (
   `id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
@@ -119,7 +195,6 @@ INSERT INTO `student_details` (`id`, `student_id`, `mobile`, `year`, `abc_id`, `
 -- Table structure for table `student_marks`
 --
 
-DROP TABLE IF EXISTS `student_marks`;
 CREATE TABLE `student_marks` (
   `id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
@@ -159,7 +234,6 @@ INSERT INTO `student_marks` (`id`, `student_id`, `semester`, `subject`, `exam_na
 -- Table structure for table `subjects`
 --
 
-DROP TABLE IF EXISTS `subjects`;
 CREATE TABLE `subjects` (
   `id` int(11) NOT NULL,
   `subject_name` varchar(150) DEFAULT NULL,
@@ -183,10 +257,29 @@ INSERT INTO `subjects` (`id`, `subject_name`, `year`, `subject_type`, `credits`)
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subject_change_requests`
+--
+
+CREATE TABLE `subject_change_requests` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `current_subjects` text NOT NULL,
+  `requested_subjects` text NOT NULL,
+  `reason` text NOT NULL,
+  `proof_file` varchar(255) DEFAULT NULL,
+  `status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
+  `approved_by` int(11) DEFAULT NULL,
+  `approver_type` enum('Admin','Teacher') DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `teachers`
 --
 
-DROP TABLE IF EXISTS `teachers`;
 CREATE TABLE `teachers` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
@@ -201,95 +294,9 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `name`, `email`, `password`, `department`, `created_at`) VALUES
-(1, 'Komal', 'komal@gmail.com', '123456', 'Computer Science', '2026-01-09 07:52:15'),
-(2, 'amar mane', 'a@gmail.com', '123456', 'cs', '2026-01-12 15:26:40'),
-(3, 'smruti kulkarni', 's@gmail.com', '123456', 'cs', '2026-01-23 16:29:46');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `notices`
---
-
-DROP TABLE IF EXISTS `notices`;
-CREATE TABLE `notices` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `message` text NOT NULL,
-  `target_year` enum('All','FY','SY','TY') NOT NULL,
-  `posted_by` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `notices`
---
-
-INSERT INTO `notices` (`id`, `title`, `message`, `target_year`, `posted_by`, `created_at`) VALUES
-(1, 'Welcome to New Semester', 'Classes for the new academic year will commence from June 15th. Please check your timetables for details.', 'All', 'Main Admin', '2026-02-01 10:00:00'),
-(2, 'Assignment Submission Deadline', 'Last date to submit Assignment 1 for DSA is extended to next Friday.', 'TY', 'Komal', '2026-02-05 14:30:00'),
-(3, 'Guest Lecture on AI', 'A guest lecture on \"Future of AI\" is organized on Saturday at 10 AM in the Auditorium. All students are requested to attend.', 'All', 'amar mane', '2026-02-06 09:15:00'),
-(4, 'Holiday Notice', 'College will remain closed on Monday due to public holiday.', 'All', 'Main Admin', '2026-02-07 08:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `attendance`
---
-
-DROP TABLE IF EXISTS `attendance`;
-CREATE TABLE `attendance` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `student_id` int(11) NOT NULL,
-  `subject` varchar(150) NOT NULL,
-  `date` date NOT NULL,
-  `status` enum('Present','Absent','Late') NOT NULL,
-  `marked_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `student_id` (`student_id`),
-  KEY `marked_by` (`marked_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `attendance`
---
-
-INSERT INTO `attendance` (`id`, `student_id`, `subject`, `date`, `status`, `marked_by`, `created_at`) VALUES
-(1, 1, 'Mathematics', '2026-02-01', 'Present', 1, '2026-02-01 10:00:00'),
-(2, 1, 'Mathematics', '2026-02-02', 'Present', 1, '2026-02-02 10:00:00'),
-(3, 1, 'Mathematics', '2026-02-03', 'Absent', 1, '2026-02-03 10:00:00'),
-(4, 1, 'Mathematics', '2026-02-04', 'Present', 1, '2026-02-04 10:00:00'),
-(5, 2, 'Computer Science', '2026-02-01', 'Present', 1, '2026-02-01 10:00:00'),
-(6, 2, 'Computer Science', '2026-02-02', 'Late', 1, '2026-02-02 10:00:00'),
-(7, 3, 'Data Science', '2026-02-01', 'Present', 1, '2026-02-01 10:00:00'),
-(8, 3, 'Data Science', '2026-02-02', 'Present', 1, '2026-02-02 10:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `feedback`
---
-
-DROP TABLE IF EXISTS `feedback`;
-CREATE TABLE `feedback` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `message` text NOT NULL,
-  `submitted_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `feedback`
---
-
-INSERT INTO `feedback` (`id`, `name`, `email`, `message`, `submitted_at`) VALUES
-(1, 'Rahul Verma', 'rahul@test.com', 'Great portal! Very easy to use and navigate.', '2026-02-02 12:00:00'),
-(2, 'Priya Singh', 'priya@test.com', 'Can you please add a dark mode option? It would be really helpful.', '2026-02-05 16:20:00');
-
--- --------------------------------------------------------
+(1, 'Komal', 'komal@gmail.com', '$2y$10$6Bc8CtpyF1n6vLfeXCu8luWA2uTqEE/FUfF8uGFrPa2MDerGh08WO', 'Computer Science', '2026-01-09 07:52:15'),
+(2, 'amar mane', 'a@gmail.com', '$2y$10$6Bc8CtpyF1n6vLfeXCu8luWA2uTqEE/FUfF8uGFrPa2MDerGh08WO', 'cs', '2026-01-12 15:26:40'),
+(3, 'smruti kulkarni', 's@gmail.com', '$2y$10$6Bc8CtpyF1n6vLfeXCu8luWA2uTqEE/FUfF8uGFrPa2MDerGh08WO', 'cs', '2026-01-23 16:29:46');
 
 --
 -- Indexes for dumped tables
@@ -301,6 +308,26 @@ INSERT INTO `feedback` (`id`, `name`, `email`, `message`, `submitted_at`) VALUES
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `marked_by` (`marked_by`);
+
+--
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notices`
+--
+ALTER TABLE `notices`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `students`
@@ -317,17 +344,17 @@ ALTER TABLE `student_details`
   ADD KEY `student_id` (`student_id`);
 
 --
--- Indexes for table `student_marks`
---
-ALTER TABLE `student_marks`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_mark` (`student_id`,`semester`,`subject`);
-
---
 -- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subject_change_requests`
+--
+ALTER TABLE `subject_change_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `teachers`
@@ -335,12 +362,6 @@ ALTER TABLE `subjects`
 ALTER TABLE `teachers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `notices`
---
-ALTER TABLE `notices`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -353,33 +374,15 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `students`
+-- AUTO_INCREMENT for table `attendance`
 --
-ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `attendance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `student_details`
+-- AUTO_INCREMENT for table `feedback`
 --
-ALTER TABLE `student_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `student_marks`
---
-ALTER TABLE `student_marks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `subjects`
---
-ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `teachers`
---
-ALTER TABLE `teachers`
+ALTER TABLE `feedback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
@@ -389,11 +392,50 @@ ALTER TABLE `notices`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `student_details`
+--
+ALTER TABLE `student_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `subject_change_requests`
+--
+ALTER TABLE `subject_change_requests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
 -- Constraints for table `student_details`
 --
 ALTER TABLE `student_details`
   ADD CONSTRAINT `student_details_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
 
+--
+-- Constraints for table `subject_change_requests`
+--
+ALTER TABLE `subject_change_requests`
+  ADD CONSTRAINT `subject_change_requests_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

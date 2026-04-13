@@ -171,10 +171,50 @@ newnep/
 └── README.md                    # Project documentation
 ```
 
-## ✨ Recent Updates
-- **Full UI Redesign:** Implemented Tailwind CSS for a modern look.
-- **Enhanced Data Access:** Admins and Faculty can now fully edit student profiles, including passwords and complex subject data.
-- **Security:** Password hashing implementation for all users.
+## 🔒 Security Features
+
+- **Password Hashing**: All passwords are hashed using PHP's `password_hash()` with bcrypt
+- **SQL Injection Prevention**: Prepared statements used throughout
+- **XSS Protection**: Output sanitization with `htmlspecialchars()`
+- **Session Management**: 30-minute timeout for student/faculty sessions
+- **File Upload Validation**: Type and size restrictions on uploaded files
+- **Role-Based Access Control**: Separate authentication for students, faculty, and admins
+
+## 📝 Usage Guide
+
+### For Students
+1. Register at `/student/student_signup.php` (select your year: FY/SY/TY)
+2. Login and complete your profile
+3. View subjects, marks, and attendance
+4. Submit subject change requests when needed
+
+### For Faculty
+1. Login with your credentials
+2. Mark attendance and enter marks
+3. Review and approve/reject subject change requests
+4. Manage student information
+
+### For Administrators
+1. Login to admin panel
+2. Manage all users (students, teachers)
+3. Review subject change requests
+4. Generate reports and analytics
+
+## 🤝 Contributors
+1.Avishkar Deshmukh
+2.Varadraj Nalavade
+
+## 🫶 Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
+
+## 📄 License
+
+This project is open source and available for educational purposes.
 
 ---
-*Developed for the NEP Portal Project.*
+
+```markdown
+**Last updated:** 21 February 2026  
+*Developed by Avishkar Deshmukh & Varadraj Nalavade for the NEP Portal project❤️.*
+```
