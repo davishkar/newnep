@@ -200,7 +200,11 @@ newnep/
 3. Review subject change requests
 4. Generate reports and analytics
 
-## 🤝 Contributing
+## 🤝 Contributors
+1.Avishkar Deshmukh
+2.Varadraj Nalavade
+
+## 🫶 Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
 
