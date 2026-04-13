@@ -216,5 +216,5 @@ This project is open source and available for educational purposes.
 
 ```markdown
 **Last updated:** 13 April 2026  
-*Developed by Avishkar Deshmukh & Varadraj Nalavade for the NEP Portal project❤️.*
+
 ```
